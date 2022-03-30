@@ -12445,16 +12445,6 @@ footer.footer {
 #result_ul_red a {
 	text-decoration: none;
 	color: red;
-	font-weight: bold;
-	outline: none;
-	pointer-events: none;
-	/* 去除旧版浏览器的点击后的外虚线框 */
-}
-
-#result_ul_red a {
-	text-decoration: none;
-	color: red;
-	font-weight: bold;
 	outline: none;
 	pointer-events: none;
 	/* 去除旧版浏览器的点击后的外虚线框 */
@@ -12478,4 +12468,66 @@ footer.footer {
 /* 正在点击的链接*/
 #result_ul_red a:active {
 	text-decoration: none;
+}
+
+#result_ul_red .similar{
+	color: red;
+	font-weight: bold;
+}
+
+#result_ul_red li:hover{
+	background: #f2f2f2;
+}
+
+#result_ul_orange li:hover{
+	background: #f2f2f2;
+}
+
+
+
+#result_ul_orange1 .orange{
+	color: orange;
+}
+#result_ul_red1 .red{
+	color: red;
+}
+#result_ul_red1 a {
+	text-decoration: none;
+	color: red;
+	outline: none;
+	pointer-events: none;
+	/* 去除旧版浏览器的点击后的外虚线框 */
+}
+
+/*正常的未被访问过的链接*/
+#result_ul_red1 a:link {
+	text-decoration: none;
+}
+
+/*已经访问过的链接*/
+#result_ul_red1 a:visited {
+	text-decoration: none;
+}
+
+/*鼠标划过(停留)的链接*/
+#result_ul_red1 a:hover {
+	text-decoration: none;
+}
+
+/* 正在点击的链接*/
+#result_ul_red1 a:active {
+	text-decoration: none;
+}
+
+#result_ul_red1 .similar{
+	color: red;
+	font-weight: bold;
+}
+
+#result_ul_red1 li:hover{
+	background: #f2f2f2;
+}
+
+#result_ul_orange1 li:hover{
+	background: #f2f2f2;
 }

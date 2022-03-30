@@ -88,9 +88,16 @@
 
 <body>
 	<nav class="navbar navbar-light bg-light static-top">
-		<div class="container"> <a class="navbar-brand" href="#signup">论文翻译降重助手</a>
-			<a class="btn btn-primary" href="https://freysu.github.io/2022/02/28/论文翻译降重助手使用说明文档" target="_blank"
-				id="firstUse">帮助</a>
+		<div class="container"> 
+			<a class="navbar-brand" href="https://freysu.github.io/MyTranslator">论文翻译降重助手</a>
+			<div>
+				<a class="btn btn-warning btn-sm" href="https://freysu.github.io/2022/02/28/论文翻译降重助手使用说明文档" target="_blank"
+					id="firstUse"><i class="bi bi-info-square"></i> 使用帮助
+				</a>
+				<a class="btn btn-dark btn-sm" href="https://freysu.github.io/ReadFile" target="_blank"
+					id="readFileBtn"><i class="bi bi-check-square"></i> 一键提取查重报告
+				</a>
+			</div>
 		</div>
 	</nav>
 
@@ -111,7 +118,9 @@
 						3. 如果是你想上传 维普 的，请找到 维普 里的<b>XXX_比对报告.html</b>
 					</p>
 					<hr>
-					<input class="form-control" type="file" id="file">
+					<div class="row">
+						<div class="col-md-6">
+							<input class="form-control" type="file" id="file">
 					<hr>
 					<div id="result">
 						<div id="result_show">
@@ -119,6 +128,17 @@
 							<ol id="result_ul_orange"></ol>
 						</div>
 					</div>
+						</div>
+						<div class="col-md-6">
+							<input class="form-control" type="file" id="file1">
+					<hr>
+					<div id="result1">
+						<div id="result_show1">
+							<ol id="result_ul_red1"></ol>
+							<ol id="result_ul_orange1"></ol>
+						</div>
+					</div>
+						</div>
 				</div>
 			</div>
 	</section> <!-- Call to Action-->
@@ -203,7 +223,14 @@
 		let reader = null; // 声明reader变量方便后面使用
 		const fileNode = document.querySelector('#file'); // 获取input标签
 		fileNode.addEventListener('change', (e) => { // 为获取的input标签添加事件监听，当选择文件以后触发
-			$("li").detach();
+			$("#result_ul_red li").detach();
+			$("#result_ul_orange li").detach();
+			$('#result_ul_orange').css("overflow","auto");
+			$('#result_ul_orange').css("height","");
+			$('#result_ul_red').css("overflow","auto");
+			$('#result_ul_red').css("height","");
+			$('#result_ul_red p').detach();
+			$('#result_ul_orange p').detach();
 			if (window.FileReader) { // 判断浏览器中有没有FileReader，毕竟现在不是所有浏览器都有FileReader
 				reader = new FileReader(); // 实例化FileReader
 				reader.onload = (event) => { // 设置读取成功以后执行的方法
@@ -213,11 +240,11 @@
 						show();
 					}, 2250)
 
+
 					function show() {
 						var similarArr = doc.querySelectorAll(".similar");
 						if (similarArr.length > 0) {
-							sendRequest(localStorage.getItem("appid1") + "——PaperYY", localStorage.getItem(
-								"key1"), 6);
+							// sendRequest(localStorage.getItem("appid1") + "——PaperYY", localStorage.getItem("key1"), 6);
 							for (let i = 0; i < similarArr.length; i++) {
 								let li = document.createElement("li");
 								let txt = similarArr[i];
@@ -228,6 +255,7 @@
 							let p = document.createElement("p");
 							document.querySelector("#result_ul_red").appendChild(p);
 							p.innerHTML = txt1;
+							$("#result_ul_red em").before("<input type='checkbox' class='inp_checkbox' name='inp_checkbox'>");
 						} else {
 							var bhongArr = doc.querySelectorAll(".red");
 							if (bhongArr.length > 0) {
@@ -241,44 +269,230 @@
 								let p = document.createElement("p");
 								document.querySelector("#result_ul_red").appendChild(p);
 								p.innerHTML = txt1;
+								$("#result_ul_red .red").before("<input type='checkbox' class='inp_checkbox' name='inp_checkbox'>");
+
 								var bhuangArr = doc.querySelectorAll(".orange");
 								if (bhuangArr.length > 0) {
-									sendRequest(localStorage.getItem("appid1") + "——PaperFree", localStorage
-										.getItem("key1"), 6);
+									// sendRequest(localStorage.getItem("appid1") + "——PaperFree", localStorage.getItem("key1"), 6);
 									for (let i = 0; i < bhuangArr.length; i++) {
 										let li = document.createElement("li");
 										let txt = bhuangArr[i];
 										document.querySelector("#result_ul_orange").appendChild(li);
 										li.appendChild(txt);
 									};
+									$("#result_ul_orange .orange").before("<input type='checkbox' class='inp_checkbox' name='inp_checkbox'>");
 								} else {
-									sendRequest(localStorage.getItem("appid1") + "——维普", localStorage
-										.getItem("key1"), 6);
+									// sendRequest(localStorage.getItem("appid1") + "——维普", localStorage.getItem("key1"), 6);
 								}
 							} else {
-								sendRequest(localStorage.getItem("appid1"), "上传内容不对——" + localStorage.getItem(
-									"key1"), 7);
+								// sendRequest(localStorage.getItem("appid1"), "上传内容不对——" + localStorage.getItem("key1"), 7);
 								showToast("请检查上传的报告是否属于PaperYY、PaperFree和维普任意一个！", 4500);
 							}
+						}
+						var oColor = "";
+						$('input[name=inp_checkbox]').change(function(){
+						   	if($(this).next().css("color") != "rgb(0, 0, 0)"){
+								oColor = $(this).next().css("color");
+							} 
+							if($(this).is(':checked')) {
+						        // Checkbox is checked..
+						        $(this).parent().css("text-decoration","line-through")
+						        $(this).next().css("color","black")
+						    } else {
+						        // Checkbox is not checked..
+						        $(this).parent().css("text-decoration","none")
+						        $(this).next().css("color",oColor)
+						    }
+						});
+						$('#result_ul_red li').dblclick(function(){
+							if($(this).css("text-decoration") == "line-through solid rgb(33, 37, 41)"){
+						        $(this).css("text-decoration","none")
+						        $(this).children().css("color","red")
+						        $(this).children("input").prop("checked",false);
+							}else{
+								$(this).css("text-decoration","line-through")
+						        $(this).children().css("color","black")
+						        $(this).children("input").prop("checked",true);
+
+							}
+						})
+						$('#result_ul_orange li').dblclick(function(){
+							if($(this).css("text-decoration") == "line-through solid rgb(33, 37, 41)"){
+						        $(this).css("text-decoration","none")
+						        $(this).children().css("color","orange")
+						        $(this).children("input").prop("checked",false);
+							}else{
+								$(this).css("text-decoration","line-through")
+						        $(this).children().css("color","black")
+						        $(this).children("input").prop("checked",true);
+
+							}
+						})	
+						$("#result_ul_red em").attr("onmouseover","");
+						$("#result_ul_red em").attr("onmouseout","");
+						if($('#result_ul_orange').css("height").replace(/px/,'')>= 2000){
+							console.log($('#result_ul_orange').css("height"));
+							$('#result_ul_orange').css("overflow","scroll");
+							$('#result_ul_orange').css("height","2000px");
+						}
+						if($('#result_ul_red').css("height").replace(/px/,'')>= 2000){
+							console.log($('#result_ul_red').css("height"));
+							$('#result_ul_red').css("overflow","scroll");
+							$('#result_ul_red').css("height","2000px");
 						}
 					}
 				}
 			} else { // 没有FileReader的弹出警告然后返回
-				alert('你的先浏览器没有FileReader，不能这么干！');
+				alert('你的浏览器没有FileReader，不能这么干！');
 				return;
 			}
 
 			const file = e.target.files[0]; // 拿到选择的文件信息
-			// console.log(file);
-			console.log(file.type)
 			if (file.type == 'text/html') {
 				showToast("正在解析!", 2000)
-				sendRequest(localStorage.getItem("appid1"), "正在解析——" + localStorage.getItem("key1"), 6);
-				// reader.readAsText(file,'GB2312'); // 将文件信息转成文本，默认是UTF-8格式，这个就是转成功后执行 reader.onload 方法
+				// sendRequest(localStorage.getItem("appid1"), "正在解析——" + localStorage.getItem("key1"), 6);
 				reader.readAsText(file); // 将文件信息转成文本，默认是UTF-8格式，这个就是转成功后执行 reader.onload 方法
 			} else {
 				showToast("上传的文件的类型不符合!", 3000)
-				sendRequest(localStorage.getItem("appid1"), "上传的文件的类型不符合——" + localStorage.getItem("key1"), 7);
+				// sendRequest(localStorage.getItem("appid1"), "上传的文件的类型不符合——" + localStorage.getItem("key1"), 7);
+			}
+		})
+
+		let reader1 = null; // 声明reader变量方便后面使用
+		const fileNode1 = document.querySelector('#file1'); // 获取input标签
+		fileNode1.addEventListener('change', (e) => { // 为获取的input标签添加事件监听，当选择文件以后触发
+			$("#result_ul_red1 li").detach();
+			$("#result_ul_orange1 li").detach();
+			$('#result_ul_orange1').css("overflow","auto");
+			$('#result_ul_orange1').css("height","");
+			$('#result_ul_red1').css("overflow","auto");
+			$('#result_ul_red1').css("height","");
+			$('#result_ul_red1 p').detach();
+			$('#result_ul_orange1 p').detach();
+			if (window.FileReader) { // 判断浏览器中有没有FileReader，毕竟现在不是所有浏览器都有FileReader
+				reader = new FileReader(); // 实例化FileReader
+				reader.onload = (event) => { // 设置读取成功以后执行的方法
+					parser = new DOMParser();
+					doc = parser.parseFromString(event.target.result, "text/html")
+					setTimeout(() => {
+						show();
+					}, 2250)
+
+
+					function show() {
+						var similarArr = doc.querySelectorAll(".similar");
+						if (similarArr.length > 0) {
+							// sendRequest(localStorage.getItem("appid1") + "——PaperYY", localStorage.getItem("key1"), 6);
+							for (let i = 0; i < similarArr.length; i++) {
+								let li = document.createElement("li");
+								let txt = similarArr[i];
+								document.querySelector("#result_ul_red1").appendChild(li);
+								li.appendChild(txt);
+							};
+							let txt1 = `<br/>`
+							let p = document.createElement("p");
+							document.querySelector("#result_ul_red1").appendChild(p);
+							p.innerHTML = txt1;
+							$("#result_ul_red1 em").before("<input type='checkbox' class='inp_checkbox' name='inp_checkbox'>");
+						} else {
+							var bhongArr = doc.querySelectorAll(".red");
+							if (bhongArr.length > 0) {
+								for (let i = 0; i < bhongArr.length; i++) {
+									let li = document.createElement("li");
+									let txt = bhongArr[i];
+									document.querySelector("#result_ul_red1").appendChild(li);
+									li.appendChild(txt);
+								};
+								let txt1 = `<br/>`
+								let p = document.createElement("p");
+								document.querySelector("#result_ul_red1").appendChild(p);
+								p.innerHTML = txt1;
+								$("#result_ul_red1 .red").before("<input type='checkbox' class='inp_checkbox' name='inp_checkbox'>");
+
+								var bhuangArr = doc.querySelectorAll(".orange");
+								if (bhuangArr.length > 0) {
+									// sendRequest(localStorage.getItem("appid1") + "——PaperFree", localStorage.getItem("key1"), 6);
+									for (let i = 0; i < bhuangArr.length; i++) {
+										let li = document.createElement("li");
+										let txt = bhuangArr[i];
+										document.querySelector("#result_ul_orange1").appendChild(li);
+										li.appendChild(txt);
+									};
+									$("#result_ul_orange1 .orange").before("<input type='checkbox' class='inp_checkbox' name='inp_checkbox'>");
+								} else {
+									// sendRequest(localStorage.getItem("appid1") + "——维普", localStorage.getItem("key1"), 6);
+								}
+							} else {
+								// sendRequest(localStorage.getItem("appid1"), "上传内容不对——" + localStorage.getItem("key1"), 7);
+								showToast("请检查上传的报告是否属于PaperYY、PaperFree和维普任意一个！", 4500);
+							}
+						}
+						var oColor = "";
+						$('input[name=inp_checkbox]').change(function(){
+						   	if($(this).next().css("color") != "rgb(0, 0, 0)"){
+								oColor = $(this).next().css("color");
+							} 
+							if($(this).is(':checked')) {
+						        // Checkbox is checked..
+						        $(this).parent().css("text-decoration","line-through")
+						        $(this).next().css("color","black")
+						    } else {
+						        // Checkbox is not checked..
+						        $(this).parent().css("text-decoration","none")
+						        $(this).next().css("color",oColor)
+						    }
+						});
+						$('#result_ul_red1 li').dblclick(function(){
+							if($(this).css("text-decoration") == "line-through solid rgb(33, 37, 41)"){
+						        $(this).css("text-decoration","none")
+						        $(this).children().css("color","red")
+						        $(this).children("input").prop("checked",false);
+							}else{
+								$(this).css("text-decoration","line-through")
+						        $(this).children().css("color","black")
+						        $(this).children("input").prop("checked",true);
+
+							}
+						})
+						$('#result_ul_orange1 li').dblclick(function(){
+							if($(this).css("text-decoration") == "line-through solid rgb(33, 37, 41)"){
+						        $(this).css("text-decoration","none")
+						        $(this).children().css("color","orange")
+						        $(this).children("input").prop("checked",false);
+							}else{
+								$(this).css("text-decoration","line-through")
+						        $(this).children().css("color","black")
+						        $(this).children("input").prop("checked",true);
+
+							}
+						})	
+						$("#result_ul_red1 em").attr("onmouseover","");
+						$("#result_ul_red1 em").attr("onmouseout","");
+						if($('#result_ul_orange1').css("height").replace(/px/,'')>= 2000){
+							console.log($('#result_ul_orange1').css("height"));
+							$('#result_ul_orange1').css("overflow","scroll");
+							$('#result_ul_orange1').css("height","2000px");
+						}
+						if($('#result_ul_red1').css("height").replace(/px/,'')>= 2000){
+							console.log($('#result_ul_red1').css("height"));
+							$('#result_ul_red1').css("overflow","scroll");
+							$('#result_ul_red1').css("height","2000px");
+						}
+					}
+				}
+			} else { // 没有FileReader的弹出警告然后返回
+				alert('你的浏览器没有FileReader，不能这么干！');
+				return;
+			}
+
+			const file = e.target.files[0]; // 拿到选择的文件信息
+			if (file.type == 'text/html') {
+				showToast("正在解析!", 2000)
+				// sendRequest(localStorage.getItem("appid1"), "正在解析——" + localStorage.getItem("key1"), 6);
+				reader.readAsText(file); // 将文件信息转成文本，默认是UTF-8格式，这个就是转成功后执行 reader.onload 方法
+			} else {
+				showToast("上传的文件的类型不符合!", 3000)
+				// sendRequest(localStorage.getItem("appid1"), "上传的文件的类型不符合——" + localStorage.getItem("key1"), 7);
 			}
 		})
 
@@ -389,23 +603,55 @@
 			}
 		}
 
-		function showToast(msg, duration) {
-			duration = isNaN(duration) ? 3000 : duration;
+		function showToast(msg,duration){
+			duration = isNaN(duration) ? 5000 : duration;
+			var d = (new Date);
+			//获取年份
+			var years = d.getFullYear();
+			//获取月份
+			var months = d.getMonth() + 1;
+			//获取日期
+			var dates = d.getDate();
+			//获取小时
+			var hours = d.getHours();
+			//获取分钟
+			var minutes = d.getMinutes();
+			//获取秒钟 
+			var seconds = d.getSeconds();
+			var nowTime = years + "/" + months + "/" + dates + " " + hours + ":" + minutes + ":" + seconds
 			var m = document.createElement('div');
-			m.innerHTML = msg;
-			m.style.cssText =
-				"width:60%; min-width:180px; background:#000; opacity:0.6; height:auto;min-height: 30px; color:#fff; line-height:30px; text-align:center; border-radius:4px; position:fixed; top:60%; left:20%; z-index:999999;";
+			var time = nowTime;
+			var content = `<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+			  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+			    <div class="toast-header">
+			      <i style="margin-right:0.15625rem;"class="bi bi-app-indicator"></i>
+			      <strong class="me-auto">论文翻译降重助手</strong>
+			      <small>`+time+`</small>
+			      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+			    </div>
+			    <div class="toast-body">
+					`+msg+`
+			    </div>
+			  </div>
+			</div>`
 			document.body.appendChild(m);
+			m.innerHTML = content;
+			var toastLiveExample = document.getElementById('liveToast')
+			var toast = new bootstrap.Toast(toastLiveExample)
+			toast.show();
 			setTimeout(function () {
 				var d = 0.5;
 				m.style.webkitTransition = '-webkit-transform ' + d + 's ease-in, opacity ' + d +
 					's ease-in';
 				m.style.opacity = '0';
 				setTimeout(function () {
-					document.body.removeChild(m)
+					toast.hide();
+					document.body.removeChild(m);
 				}, d * 1000);
 			}, duration);
 		}
+
+		
 	</script>
 </body>
 
