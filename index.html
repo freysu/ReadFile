@@ -105,32 +105,52 @@
 		<div class="container-fluid p-0 ">
 			<div class="row g-0 ">
 				<div class="col-lg-6 order-lg-1 my-auto showcase-text">
-					<h1>提取查重报告的标红内容</h1>
-					<h3>目前支持<i>维普</i>、<i>PaperYY</i> 和 <i>PaperFree</i> 检测报告</h3>
-					<p>
-						1. 如果是你想上传 PaperYY 的，请找到 PaperYY 论文检测报告里的<b>全文标明引文报告.html</b>
-					</p>
-					<p>
-						2. 如果是你想上传 PaperFree 的，请找到 PaperFree 论文检测报告里的 paper.htm 文件，
-						其路径在<b>.\htmls\detail_report\paper.htm</b>
-					</p>
-					<p>
-						3. 如果是你想上传 维普 的，请找到 维普 里的<b>XXX_比对报告.html</b>
-					</p>
+					<h1 align="center" >一键提取查重报告中检测到的重复内容</h1>
+					<p align="center" class="lead"><b>（目前支持<i>维普</i>、<i>PaperYY</i> 和 <i>PaperFree</i> 检测报告）</b></p>
+					<ol class="list-unstyled">
+						<li>
+							<p>
+								1. 如果是你想上传 PaperYY 的检测报告，请找到 PaperYY 论文检测报告里的 <b>全文标明引文报告.html</b>
+							</p>
+						</li>
+						<li>
+							<p>
+								2. 如果是你想上传 PaperFree 的检测报告，请找到 PaperFree 论文检测报告里的 paper.htm 文件，
+								其路径在 <b>.\htmls\detail_report\paper.htm</b>
+							</p>
+						</li>
+						<li>
+							<p>
+								3. 如果是你想上传 维普 的检测报告，请找到 维普 里的 <b>XXX_比对报告.html</b>
+							</p>
+						</li>
+					</ol>
+					<blockquote>
+						<small>
+						论文查重报告的橙色部分表示文本、公式、表格或其他内容，检测到数据库资源与系统中存在重复、相似内容，相当于相似内容的50％~80％，并非完全复制，而是需要适当地修改和减少内容。与红色部分相比，红色部分的重复率较低，而与绿色部分相比，重复率又有所提高，因此对橙色部分的了解就能大致了解另外两种颜色所代表的意义。红色部分基本上就是检测论文内容和数据库资源完全一样，重复率在80％~100％之间，那就是重点修改降重的部分；绿色部分表示文章的独创性很高，是不会被计算进论文整体重复率的。为了让重复率能快速的达到标准，需要我们仔细的修改核对报告中标注红色和橙色的部分，这样能降低重复率。
+						</small>
+					</blockquote>
+					
 					<hr>
 					<div class="row">
 						<div class="col-md-6">
-							<input class="form-control" type="file" id="file">
+							<div class="box" title="你也可以拖拽上传文件" >
+								<input class="form-control" type="file" id="file">
+								<small style="margin-left:15px;">下方将会显示提取结果</small>
+							</div>
 					<hr>
-					<div id="result">
-						<div id="result_show">
-							<ol id="result_ul_red"></ol>
-							<ol id="result_ul_orange"></ol>
+					<div id="result" >
+						<div id="result_show" >
+							<ol id="result_ul_red" ></ol>
+							<ol id="result_ul_orange" ></ol>
 						</div>
 					</div>
 						</div>
 						<div class="col-md-6">
-							<input class="form-control" type="file" id="file1">
+							<div class="box" title="你也可以拖拽上传文件">
+								<input class="form-control" type="file" id="file1">
+								<small style="margin-left:15px;">下方将会显示提取结果</small>
+							</div>
 					<hr>
 					<div id="result1">
 						<div id="result_show1">
@@ -237,7 +257,18 @@
 					parser = new DOMParser();
 					doc = parser.parseFromString(event.target.result, "text/html")
 					setTimeout(() => {
-						show();
+						show()
+						setTimeout(()=>{
+							if($("#result_ul_red .similar").length > 0){
+								showToast("解析成功！<b>红色字体表示查重报告里的标红内容——红色部分基本上就是检测论文内容和数据库资源完全一样，重复率在80％~100％之间，那就是重点修改降重的部分</b>",4000)
+							}else if($("#result_ul_red .red_part").length > 0){
+								showToast("解析成功！<b>红色字体表示查重报告里的标红内容——红色部分基本上就是检测论文内容和数据库资源完全一样，重复率在80％~100％之间，那就是重点修改降重的部分</b>",4000)
+							} else if ($("#result_ul_orange .orange").length > 0){
+								showToast("解析成功！<b>红色字体表示查重报告里的标红内容——红色部分基本上就是检测论文内容和数据库资源完全一样，重复率在80％~100％之间，那就是重点修改降重的部分</b><br/><b>橙色字体表示查重报告里的标红内容——橙色就表示文本、公式、表格或其他内容，检测到数据库资源与系统中存在重复、相似内容，相当于相似内容的50％~80％，并非完全复制，而是需要适当地修改和减少内容</b>",4000)
+							} else{
+								showToast("解析失败！！！",4000)
+							}
+						},500)
 					}, 2250)
 
 
@@ -286,7 +317,7 @@
 								}
 							} else {
 								// sendRequest(localStorage.getItem("appid1"), "上传内容不对——" + localStorage.getItem("key1"), 7);
-								showToast("请检查上传的报告是否属于PaperYY、PaperFree和维普任意一个！", 4500);
+								showToast("解析失败！请检查上传的文件是否符合规则！", 4500);
 							}
 						}
 						var oColor = "";
@@ -331,12 +362,12 @@
 						$("#result_ul_red em").attr("onmouseover","");
 						$("#result_ul_red em").attr("onmouseout","");
 						if($('#result_ul_orange').css("height").replace(/px/,'')>= 2000){
-							console.log($('#result_ul_orange').css("height"));
+							//console.log($('#result_ul_orange').css("height"));
 							$('#result_ul_orange').css("overflow","scroll");
 							$('#result_ul_orange').css("height","2000px");
 						}
 						if($('#result_ul_red').css("height").replace(/px/,'')>= 2000){
-							console.log($('#result_ul_red').css("height"));
+							//console.log($('#result_ul_red').css("height"));
 							$('#result_ul_red').css("overflow","scroll");
 							$('#result_ul_red').css("height","2000px");
 						}
@@ -348,13 +379,15 @@
 			}
 
 			const file = e.target.files[0]; // 拿到选择的文件信息
-			if (file.type == 'text/html') {
-				showToast("正在解析!", 2000)
-				// sendRequest(localStorage.getItem("appid1"), "正在解析——" + localStorage.getItem("key1"), 6);
-				reader.readAsText(file); // 将文件信息转成文本，默认是UTF-8格式，这个就是转成功后执行 reader.onload 方法
-			} else {
-				showToast("上传的文件的类型不符合!", 3000)
-				// sendRequest(localStorage.getItem("appid1"), "上传的文件的类型不符合——" + localStorage.getItem("key1"), 7);
+			if(file != undefined){
+				if (file.type == "text/html") {
+					showToast("正在解析!", 2000)
+					// sendRequest(localStorage.getItem("appid1"), "正在解析——" + localStorage.getItem("key1"), 6);
+					reader.readAsText(file); // 将文件信息转成文本，默认是UTF-8格式，这个就是转成功后执行 reader.onload 方法
+				} else {
+					showToast("上传的文件的类型不符合!", 3000)
+					// sendRequest(localStorage.getItem("appid1"), "上传的文件的类型不符合——" + localStorage.getItem("key1"), 7);
+				}
 			}
 		})
 
@@ -376,6 +409,17 @@
 					doc = parser.parseFromString(event.target.result, "text/html")
 					setTimeout(() => {
 						show();
+						setTimeout(()=>{
+							if($("#result_ul_red1 .similar").length > 0){
+								showToast("解析成功！<b>红色字体表示查重报告里的标红内容——红色部分基本上就是检测论文内容和数据库资源完全一样，重复率在80％~100％之间，那就是重点修改降重的部分</b>",4000)
+							}else if($("#result_ul_red1 .red_part").length > 0){
+								showToast("解析成功！<b>红色字体表示查重报告里的标红内容——红色部分基本上就是检测论文内容和数据库资源完全一样，重复率在80％~100％之间，那就是重点修改降重的部分</b>",4000)
+							} else if ($("#result_ul_orange1 .orange").length > 0){
+								showToast("解析成功！<b>红色字体表示查重报告里的标红内容——红色部分基本上就是检测论文内容和数据库资源完全一样，重复率在80％~100％之间，那就是重点修改降重的部分</b><br/><b>橙色字体表示查重报告里的标红内容——橙色就表示文本、公式、表格或其他内容，检测到数据库资源与系统中存在重复、相似内容，相当于相似内容的50％~80％，并非完全复制，而是需要适当地修改和减少内容</b>",4000)
+							} else{
+								showToast("解析失败！！！",4000)
+							}
+						},500)
 					}, 2250)
 
 
@@ -424,7 +468,7 @@
 								}
 							} else {
 								// sendRequest(localStorage.getItem("appid1"), "上传内容不对——" + localStorage.getItem("key1"), 7);
-								showToast("请检查上传的报告是否属于PaperYY、PaperFree和维普任意一个！", 4500);
+								showToast("解析失败！请检查上传的文件是否符合规则！", 4500);
 							}
 						}
 						var oColor = "";
@@ -486,15 +530,18 @@
 			}
 
 			const file = e.target.files[0]; // 拿到选择的文件信息
-			if (file.type == 'text/html') {
-				showToast("正在解析!", 2000)
-				// sendRequest(localStorage.getItem("appid1"), "正在解析——" + localStorage.getItem("key1"), 6);
-				reader.readAsText(file); // 将文件信息转成文本，默认是UTF-8格式，这个就是转成功后执行 reader.onload 方法
-			} else {
-				showToast("上传的文件的类型不符合!", 3000)
-				// sendRequest(localStorage.getItem("appid1"), "上传的文件的类型不符合——" + localStorage.getItem("key1"), 7);
+			if(file != undefined){
+				if (file.type == 'text/html') {
+					showToast("正在解析!", 2000)
+					// sendRequest(localStorage.getItem("appid1"), "正在解析——" + localStorage.getItem("key1"), 6);
+					reader.readAsText(file); // 将文件信息转成文本，默认是UTF-8格式，这个就是转成功后执行 reader.onload 方法
+				} else {
+					showToast("上传的文件的类型不符合!", 3000)
+					// sendRequest(localStorage.getItem("appid1"), "上传的文件的类型不符合——" + localStorage.getItem("key1"), 7);
+				}
 			}
 		})
+		
 
 		let timer = null;
 
@@ -621,7 +668,7 @@
 			var nowTime = years + "/" + months + "/" + dates + " " + hours + ":" + minutes + ":" + seconds
 			var m = document.createElement('div');
 			var time = nowTime;
-			var content = `<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+			var content = `<div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
 			  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
 			    <div class="toast-header">
 			      <i style="margin-right:0.15625rem;"class="bi bi-app-indicator"></i>

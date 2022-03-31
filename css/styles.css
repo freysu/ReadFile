@@ -12436,6 +12436,15 @@ footer.footer {
 	margin-top: -5%;
 }
 
+#result_ul_red {
+	background:#e3e3e3;
+}
+
+#result_ul_orange {
+	background:#e3e3e3;
+}
+
+
 #result_ul_orange .orange{
 	color: orange;
 }
@@ -12484,6 +12493,14 @@ footer.footer {
 }
 
 
+
+#result_ul_red1 {
+	background:#e3e3e3;
+}
+
+#result_ul_orange1 {
+	background:#e3e3e3;
+}
 
 #result_ul_orange1 .orange{
 	color: orange;
