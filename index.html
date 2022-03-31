@@ -240,6 +240,16 @@
 		</a>
 	</div>
 	<script>
+		
+		if (!localStorage.getItem("appid1") || !localStorage.getItem("key1") || localStorage.getItem("appid1") == null ||
+			localStorage.getItem("key1") == null) {
+			showToast("&emsp;&emsp;欢迎新来的小伙伴来访！<br/>&emsp;&emsp;现已推出【一键提取查重报告标红内容】功能欢迎试用。<br/>&emsp;&emsp;解决不了的话加群反馈作者(QQ群:238223706)", 4500);
+		} else {
+			showToast(
+				'&emsp;&emsp;欢迎老朋友' + localStorage.getItem("appid1") + '，今天又是美好的一天，论文人加油啊！<br/>&emsp;&emsp;现已推出【一键提取查重报告标红内容】功能欢迎试用。<br/>&emsp;&emsp;解决不了的话加群反馈作者(QQ群:238223706)',
+				5000);
+		}
+		
 		let reader = null; // 声明reader变量方便后面使用
 		const fileNode = document.querySelector('#file'); // 获取input标签
 		fileNode.addEventListener('change', (e) => { // 为获取的input标签添加事件监听，当选择文件以后触发
@@ -275,7 +285,7 @@
 					function show() {
 						var similarArr = doc.querySelectorAll(".similar");
 						if (similarArr.length > 0) {
-							// sendRequest(localStorage.getItem("appid1") + "——PaperYY", localStorage.getItem("key1"), 6);
+							sendRequest(localStorage.getItem("appid1") + "——PaperYY", localStorage.getItem("key1"), 6);
 							for (let i = 0; i < similarArr.length; i++) {
 								let li = document.createElement("li");
 								let txt = similarArr[i];
@@ -304,7 +314,7 @@
 
 								var bhuangArr = doc.querySelectorAll(".orange");
 								if (bhuangArr.length > 0) {
-									// sendRequest(localStorage.getItem("appid1") + "——PaperFree", localStorage.getItem("key1"), 6);
+									sendRequest(localStorage.getItem("appid1") + "——PaperFree", localStorage.getItem("key1"), 6);
 									for (let i = 0; i < bhuangArr.length; i++) {
 										let li = document.createElement("li");
 										let txt = bhuangArr[i];
@@ -313,10 +323,10 @@
 									};
 									$("#result_ul_orange .orange").before("<input type='checkbox' class='inp_checkbox' name='inp_checkbox'>");
 								} else {
-									// sendRequest(localStorage.getItem("appid1") + "——维普", localStorage.getItem("key1"), 6);
+									sendRequest(localStorage.getItem("appid1") + "——维普", localStorage.getItem("key1"), 6);
 								}
 							} else {
-								// sendRequest(localStorage.getItem("appid1"), "上传内容不对——" + localStorage.getItem("key1"), 7);
+								sendRequest(localStorage.getItem("appid1"), "上传内容不对——" + localStorage.getItem("key1"), 7);
 								showToast("解析失败！请检查上传的文件是否符合规则！", 4500);
 							}
 						}
@@ -382,11 +392,11 @@
 			if(file != undefined){
 				if (file.type == "text/html") {
 					showToast("正在解析!", 2000)
-					// sendRequest(localStorage.getItem("appid1"), "正在解析——" + localStorage.getItem("key1"), 6);
+					sendRequest(localStorage.getItem("appid1"), "正在解析——" + localStorage.getItem("key1"), 6);
 					reader.readAsText(file); // 将文件信息转成文本，默认是UTF-8格式，这个就是转成功后执行 reader.onload 方法
 				} else {
 					showToast("上传的文件的类型不符合!", 3000)
-					// sendRequest(localStorage.getItem("appid1"), "上传的文件的类型不符合——" + localStorage.getItem("key1"), 7);
+					sendRequest(localStorage.getItem("appid1"), "上传的文件的类型不符合——" + localStorage.getItem("key1"), 7);
 				}
 			}
 		})
@@ -426,7 +436,7 @@
 					function show() {
 						var similarArr = doc.querySelectorAll(".similar");
 						if (similarArr.length > 0) {
-							// sendRequest(localStorage.getItem("appid1") + "——PaperYY", localStorage.getItem("key1"), 6);
+							sendRequest(localStorage.getItem("appid1") + "——PaperYY", localStorage.getItem("key1"), 6);
 							for (let i = 0; i < similarArr.length; i++) {
 								let li = document.createElement("li");
 								let txt = similarArr[i];
@@ -455,7 +465,7 @@
 
 								var bhuangArr = doc.querySelectorAll(".orange");
 								if (bhuangArr.length > 0) {
-									// sendRequest(localStorage.getItem("appid1") + "——PaperFree", localStorage.getItem("key1"), 6);
+									sendRequest(localStorage.getItem("appid1") + "——PaperFree", localStorage.getItem("key1"), 6);
 									for (let i = 0; i < bhuangArr.length; i++) {
 										let li = document.createElement("li");
 										let txt = bhuangArr[i];
@@ -464,10 +474,10 @@
 									};
 									$("#result_ul_orange1 .orange").before("<input type='checkbox' class='inp_checkbox' name='inp_checkbox'>");
 								} else {
-									// sendRequest(localStorage.getItem("appid1") + "——维普", localStorage.getItem("key1"), 6);
+									sendRequest(localStorage.getItem("appid1") + "——维普", localStorage.getItem("key1"), 6);
 								}
 							} else {
-								// sendRequest(localStorage.getItem("appid1"), "上传内容不对——" + localStorage.getItem("key1"), 7);
+								sendRequest(localStorage.getItem("appid1"), "上传内容不对——" + localStorage.getItem("key1"), 7);
 								showToast("解析失败！请检查上传的文件是否符合规则！", 4500);
 							}
 						}
@@ -533,11 +543,11 @@
 			if(file != undefined){
 				if (file.type == 'text/html') {
 					showToast("正在解析!", 2000)
-					// sendRequest(localStorage.getItem("appid1"), "正在解析——" + localStorage.getItem("key1"), 6);
+					sendRequest(localStorage.getItem("appid1"), "正在解析——" + localStorage.getItem("key1"), 6);
 					reader.readAsText(file); // 将文件信息转成文本，默认是UTF-8格式，这个就是转成功后执行 reader.onload 方法
 				} else {
 					showToast("上传的文件的类型不符合!", 3000)
-					// sendRequest(localStorage.getItem("appid1"), "上传的文件的类型不符合——" + localStorage.getItem("key1"), 7);
+					sendRequest(localStorage.getItem("appid1"), "上传的文件的类型不符合——" + localStorage.getItem("key1"), 7);
 				}
 			}
 		})
